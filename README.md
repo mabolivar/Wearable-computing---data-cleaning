@@ -44,7 +44,7 @@ Finally, the tidy data frame is exported in a file called *tidy_accelerometry_da
 - 86-feature measurement variables (for more information, the reader may remit to the *codebook.txt* file).
 
 
-## The dataset includes the following files:
+## The tidy dataset includes the following files:
 
 
 - 'README.txt'
@@ -53,4 +53,4 @@ Finally, the tidy data frame is exported in a file called *tidy_accelerometry_da
 
 - 'codebook.txt': Code book of the tidy data set.
 
-
+---------------------------------------------------------------------------

@@ -40,3 +40,5 @@ tBodyAccMean
 tBodyAccJerkMean
 tBodyGyroMean
 tBodyGyroJerkMean
+
+For the summary data set, the average of each measurement (feature) for each activity and each participant is computed.
