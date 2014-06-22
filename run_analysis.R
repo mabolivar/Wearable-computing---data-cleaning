@@ -49,13 +49,11 @@ acdata$Activity <- acdata$ActivityLabel
 acdata$ActivityLabel <- NULL
 
 #Export data file
-write.csv(acdata,"tidy_accelerometry_data.csv",row.names=F)
+write.table(acdata,"tidy_accelerometry_data.txt",row.names=F)
 
 #Second data file
 melted <- melt(acdata,id.vars=c("ParticipantID","Activity"))
 str(melted)
 
 summaryData <- dcast(melted,ParticipantID + Activity  ~  variable,mean)
-str(summaryData)
-table(acdata$ParticipantID,acdata$Activity)
-write.csv(summaryData,"summary_data_mean_stdv.csv",row.names=F)
+write.table(summaryData,"summary_data_mean_stdv.txt",row.names=F)

@@ -3,100 +3,54 @@
 #Wearable computing - data cleaning
 ---------------------------------------------------------------------------
 
-The script provided in this repository aggregates the data obtained in the experiment titled [http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones ](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones  "Human Activity Recognition Using Smartphones"). 
+The script provided in this repository aggregates the data obtained in the experiment titled [Human Activity Recognition Using Smartphones](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones  "Human Activity Recognition Using Smartphones"). 
  
 
 #How to use this script?
-In order to use the script, the R file ***run_analysis.R** has to be edited. In this section, the description of the main components is presented.
+In order to use the script, the R file ***run_analysis.R** has to be edited (working directory). In this section, the description of the main components is presented.
 
 
 ##Set the working directory
-The working directory (wd) is the folder which stores the R script, the input data, and the script's output data. Likewise, the wd folder must contain the following folder:
+The working directory (wd) is the folder which stores the R script, the input data folder, and the script's output data. Likewise, the wd folder must contain the following folder:
 
  - **UCI HAR Dataset**: Contains all the experiment data to be processed.
 
-
-
 ##Load required libraries
-Starting at line 9, the lines load all the required libraries. Those libraries must be installed before running the code; otherwise, an error message will be printed on Console. 
+To run this script it is required to install the *reshape2 package*. If the package is not installed, an error message will be printed on Console. 
 
-    Error in library("Hmisc") : there is no package called ‘Hmisc’
+##Run the script
 
-The reader may refer back to *Requiered libraries* section for more information.
+###1. Read files (id, activity & features files)
 
-##Load functions
-From line 15 until 213, all the functions are declared. Those function must be loaded in the *Workspace* to run the main routine.
+This code block reads into memory all the files corresponding to the participant IDs, the activity performed (it's ID) and all the measures for both the training and test data sets.
 
-##Set global parameters
-Before the main routine, a set of global parameters must be fixed.
+###2. Build features data set
+This section aggregates all the data into one single data frame and updates all the measures' names.  
 
-- **inputdir**: Input data folder directory.
-- **outputdir**: Output folder directory.
-- **outputfile**: Output .csv file name.
+##3. Extract the mean and stdv measurements
+Due to the large size of the data set, we decide to work only with the mean and standard deviation measurements. Then, all the others measurements are removed from the data frame.
 
-##Load and run the main function
-In the main function, you should fix the values for the functions parameters.
+###4. Add activity labels
+In order to make the tidy data more useful, the ActivityID (contained in the raw data) were replaced by their corresponding activity label. 
 
-The main function is composed of six blocks:
+###5. Export data file and build a summary data set
+Finally, the tidy data frame is exported in a file called *tidy_accelerometry_data.txt*. And a summary data frame is built and exported in the *summary_data_mean_stdv.txt* file.
 
-###1. Read data form the .agd files (SQLite databases)
-
-The following block reads the database (.agd file) using the file directory `dbDir` and save the accelerometry data on the variable `data` and all the settings parameters on the variable `settings`.
-
-    db <- readDatabase(dbDir)
+## For each record it is provided:
 
 
-For each record it is provided:
-======================================
+- The participant ID.
+- The activity label of the activity performed within time window 
+- 86-feature measurement variables (for more information, the reader may remit to the *codebook.txt* file).
 
-- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
-- Triaxial Angular velocity from the gyroscope. 
-- A 561-feature vector with time and frequency domain variables. 
-- Its activity label. 
-- An identifier of the subject who carried out the experiment.
 
-The dataset includes the following files:
-=========================================
+## The dataset includes the following files:
+
 
 - 'README.txt'
 
-- 'features_info.txt': Shows information about the variables used on the feature vector.
+- 'run_analysis.R': Script to generate the tidy data set.
 
-- 'features.txt': List of all features.
+- 'codebook.txt': Code book of the tidy data set.
 
-- 'activity_labels.txt': Links the class labels with their activity name.
 
-- 'train/X_train.txt': Training set.
-
-- 'train/y_train.txt': Training labels.
-
-- 'test/X_test.txt': Test set.
-
-- 'test/y_test.txt': Test labels.
-
-The following files are available for the train and test data. Their descriptions are equivalent. 
-
-- 'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
-
-- 'train/Inertial Signals/total_acc_x_train.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 'total_acc_z_train.txt' files for the Y and Z axis. 
-
-- 'train/Inertial Signals/body_acc_x_train.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
-
-- 'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second. 
-
-Notes: 
-======
-- Features are normalized and bounded within [-1,1].
-- Each feature vector is a row on the text file.
-
-For more information about this dataset contact: activityrecognition@smartlab.ws
-
-License:
-========
-Use of this dataset in publications must be acknowledged by referencing the following publication [1] 
-
-[1] Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
-
-This dataset is distributed AS-IS and no responsibility implied or explicit can be addressed to the authors or their institutions for its use or misuse. Any commercial use is prohibited.
-
-Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012.
